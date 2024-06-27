@@ -5,14 +5,28 @@
 <title>Colorful Static Webpage</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <style>
        body {
-           background-color: #f0f8ff;
-           color: #000;
-           text-align: center;
-           padding-top: 50px;
+           margin: 0;
+           padding: 0;
            font-family: 'Roboto', sans-serif;
-           transition: background-color 0.3s, color 0.3s;
+           overflow: hidden;
+       }
+       #particles-js {
+           position: absolute;
+           width: 100%;
+           height: 100%;
+           background-color: #2b2e4a;
+           background-size: cover;
+           background-position: 50% 50%;
+           z-index: -1;
+       }
+       .content {
+           position: relative;
+           text-align: center;
+           padding: 50px;
+           color: #fff;
        }
        h1 {
            color: #ff6347;
@@ -23,8 +37,15 @@
        }
        #quote {
            font-size: 20px;
-           color: #2f4f4f;
+           color: #2d1b56;
            margin: 20px 0;
+       }
+       #newQuoteBtn, #toggleThemeBtn {
+           margin-top: 20px;
+           padding: 10px 20px;
+           font-size: 16px;
+           cursor: pointer;
+           margin: 10px;
        }
        @keyframes bounce {
            0%, 20%, 50%, 80%, 100% {
@@ -37,39 +58,8 @@
                transform: translateY(-15px);
            }
        }
-       #changeColorBtn, #newQuoteBtn, #toggleThemeBtn {
-           margin-top: 20px;
-           padding: 10px 20px;
-           font-size: 16px;
-           cursor: pointer;
-           margin: 10px;
-       }
-       .gallery {
-           display: grid;
-           grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-           gap: 10px;
-           margin-top: 30px;
-       }
-       .gallery img {
-           width: 100%;
-           height: auto;
-           border-radius: 8px;
-           transition: transform 0.3s;
-       }
-       .gallery img:hover {
-           transform: scale(1.1);
-       }
-       .hidden {
-           opacity: 0;
-           transform: translateY(50px);
-           transition: opacity 0.6s, transform 0.6s;
-       }
-       .show {
-           opacity: 1;
-           transform: translateY(0);
-       }
        @media (max-width: 600px) {
-           body {
+           .content {
                padding-top: 20px;
            }
            h1 {
@@ -78,7 +68,7 @@
            p {
                font-size: 14px;
            }
-           #changeColorBtn, #newQuoteBtn, #toggleThemeBtn {
+           #newQuoteBtn, #toggleThemeBtn {
                padding: 8px 16px;
                font-size: 14px;
            }
@@ -86,18 +76,13 @@
 </style>
 </head>
 <body>
+<div id="particles-js"></div>
+<div class="content">
 <h1>Welcome to My Colorful Static Webpage <i class="fas fa-smile"></i></h1>
 <p>This is a simple static webpage served by a Spring Boot application.</p>
 <div id="quote">Click the button to see a new quote!</div>
-<button id="changeColorBtn">Change Background Color</button>
 <button id="newQuoteBtn">New Quote</button>
 <button id="toggleThemeBtn">Toggle Light/Dark Theme</button>
-<div class="gallery hidden" id="gallery">
-<img src="https://via.placeholder.com/150" alt="Placeholder Image 1">
-<img src="https://via.placeholder.com/150" alt="Placeholder Image 2">
-<img src="https://via.placeholder.com/150" alt="Placeholder Image 3">
-<img src="https://via.placeholder.com/150" alt="Placeholder Image 4">
-<img src="https://via.placeholder.com/150" alt="Placeholder Image 5">
 </div>
 <script>
        const quotes = [
@@ -107,33 +92,130 @@
            "What you do today can improve all your tomorrows. - Ralph Marston",
            "The purpose of our lives is to be happy. - Dalai Lama"
        ];
-       document.getElementById('changeColorBtn').addEventListener('click', function() {
-           document.body.style.backgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16);
-       });
        document.getElementById('newQuoteBtn').addEventListener('click', function() {
            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
            document.getElementById('quote').innerText = randomQuote;
        });
        document.getElementById('toggleThemeBtn').addEventListener('click', function() {
            const currentBgColor = getComputedStyle(document.body).backgroundColor;
-           if (currentBgColor === 'rgb(240, 248, 255)') {
-               document.body.style.backgroundColor = '#333';
-               document.body.style.color = '#fff';
-           } else {
+           if (currentBgColor === 'rgb(43, 46, 74)') {
                document.body.style.backgroundColor = '#f0f8ff';
                document.body.style.color = '#000';
+           } else {
+               document.body.style.backgroundColor = '#2b2e4a';
+               document.body.style.color = '#fff';
            }
        });
-       const observer = new IntersectionObserver((entries) => {
-           entries.forEach(entry => {
-               if (entry.isIntersecting) {
-                   entry.target.classList.add('show');
+       particlesJS("particles-js", {
+           "particles": {
+               "number": {
+                   "value": 80,
+                   "density": {
+                       "enable": true,
+                       "value_area": 800
+                   }
+               },
+               "color": {
+                   "value": "#ffffff"
+               },
+               "shape": {
+                   "type": "circle",
+                   "stroke": {
+                       "width": 0,
+                       "color": "#000000"
+                   },
+                   "polygon": {
+                       "nb_sides": 5
+                   },
+                   "image": {
+                       "src": "img/github.svg",
+                       "width": 100,
+                       "height": 100
+                   }
+               },
+               "opacity": {
+                   "value": 0.5,
+                   "random": false,
+                   "anim": {
+                       "enable": false,
+                       "speed": 1,
+                       "opacity_min": 0.1,
+                       "sync": false
+                   }
+               },
+               "size": {
+                   "value": 3,
+                   "random": true,
+                   "anim": {
+                       "enable": false,
+                       "speed": 40,
+                       "size_min": 0.1,
+                       "sync": false
+                   }
+               },
+               "line_linked": {
+                   "enable": true,
+                   "distance": 150,
+                   "color": "#ffffff",
+                   "opacity": 0.4,
+                   "width": 1
+               },
+               "move": {
+                   "enable": true,
+                   "speed": 6,
+                   "direction": "none",
+                   "random": false,
+                   "straight": false,
+                   "out_mode": "out",
+                   "bounce": false,
+                   "attract": {
+                       "enable": false,
+                       "rotateX": 600,
+                       "rotateY": 1200
+                   }
                }
-           });
-       }, {
-           threshold: 0.5
+           },
+           "interactivity": {
+               "detect_on": "canvas",
+               "events": {
+                   "onhover": {
+                       "enable": true,
+                       "mode": "repulse"
+                   },
+                   "onclick": {
+                       "enable": true,
+                       "mode": "push"
+                   },
+                   "resize": true
+               },
+               "modes": {
+                   "grab": {
+                       "distance": 400,
+                       "line_linked": {
+                           "opacity": 1
+                       }
+                   },
+                   "bubble": {
+                       "distance": 400,
+                       "size": 40,
+                       "duration": 2,
+                       "opacity": 8,
+                       "speed": 3
+                   },
+                   "repulse": {
+                       "distance": 200,
+                       "duration": 0.4
+                   },
+                   "push": {
+                       "particles_nb": 4
+                   },
+                   "remove": {
+                       "particles_nb": 2
+                   }
+               }
+           },
+           "retina_detect": true
        });
-       document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
