@@ -8,9 +8,11 @@
 <style>
        body {
            background-color: #f0f8ff;
+           color: #000;
            text-align: center;
            padding-top: 50px;
            font-family: 'Roboto', sans-serif;
+           transition: background-color 0.3s, color 0.3s;
        }
        h1 {
            color: #ff6347;
@@ -35,12 +37,36 @@
                transform: translateY(-15px);
            }
        }
-       #changeColorBtn, #newQuoteBtn {
+       #changeColorBtn, #newQuoteBtn, #toggleThemeBtn {
            margin-top: 20px;
            padding: 10px 20px;
            font-size: 16px;
            cursor: pointer;
            margin: 10px;
+       }
+       .gallery {
+           display: grid;
+           grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+           gap: 10px;
+           margin-top: 30px;
+       }
+       .gallery img {
+           width: 100%;
+           height: auto;
+           border-radius: 8px;
+           transition: transform 0.3s;
+       }
+       .gallery img:hover {
+           transform: scale(1.1);
+       }
+       .hidden {
+           opacity: 0;
+           transform: translateY(50px);
+           transition: opacity 0.6s, transform 0.6s;
+       }
+       .show {
+           opacity: 1;
+           transform: translateY(0);
        }
        @media (max-width: 600px) {
            body {
@@ -52,7 +78,7 @@
            p {
                font-size: 14px;
            }
-           #changeColorBtn, #newQuoteBtn {
+           #changeColorBtn, #newQuoteBtn, #toggleThemeBtn {
                padding: 8px 16px;
                font-size: 14px;
            }
@@ -65,6 +91,14 @@
 <div id="quote">Click the button to see a new quote!</div>
 <button id="changeColorBtn">Change Background Color</button>
 <button id="newQuoteBtn">New Quote</button>
+<button id="toggleThemeBtn">Toggle Light/Dark Theme</button>
+<div class="gallery hidden" id="gallery">
+<img src="https://via.placeholder.com/150" alt="Placeholder Image 1">
+<img src="https://via.placeholder.com/150" alt="Placeholder Image 2">
+<img src="https://via.placeholder.com/150" alt="Placeholder Image 3">
+<img src="https://via.placeholder.com/150" alt="Placeholder Image 4">
+<img src="https://via.placeholder.com/150" alt="Placeholder Image 5">
+</div>
 <script>
        const quotes = [
            "The only limit to our realization of tomorrow is our doubts of today. - Franklin D. Roosevelt",
@@ -80,6 +114,26 @@
            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
            document.getElementById('quote').innerText = randomQuote;
        });
+       document.getElementById('toggleThemeBtn').addEventListener('click', function() {
+           const currentBgColor = getComputedStyle(document.body).backgroundColor;
+           if (currentBgColor === 'rgb(240, 248, 255)') {
+               document.body.style.backgroundColor = '#333';
+               document.body.style.color = '#fff';
+           } else {
+               document.body.style.backgroundColor = '#f0f8ff';
+               document.body.style.color = '#000';
+           }
+       });
+       const observer = new IntersectionObserver((entries) => {
+           entries.forEach(entry => {
+               if (entry.isIntersecting) {
+                   entry.target.classList.add('show');
+               }
+           });
+       }, {
+           threshold: 0.5
+       });
+       document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
