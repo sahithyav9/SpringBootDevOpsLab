@@ -2,67 +2,84 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Dynamic Quote Generator</title>
+<title>Colorful Static Webpage</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 <style>
        body {
-           font-family: Arial, sans-serif;
+           background-color: #f0f8ff;
            text-align: center;
            padding-top: 50px;
+           font-family: 'Roboto', sans-serif;
        }
        h1 {
-           color: #1a0dab;
+           color: #ff6347;
+           animation: bounce 2s infinite;
+       }
+       p {
+           color: #4682b4;
        }
        #quote {
-           font-size: 24px;
-           margin-top: 20px;
+           font-size: 20px;
+           color: #2f4f4f;
+           margin: 20px 0;
        }
-       #author {
-           margin-top: 10px;
-           font-style: italic;
+       @keyframes bounce {
+           0%, 20%, 50%, 80%, 100% {
+               transform: translateY(0);
+           }
+           40% {
+               transform: translateY(-30px);
+           }
+           60% {
+               transform: translateY(-15px);
+           }
        }
-       #newQuoteBtn {
+       #changeColorBtn, #newQuoteBtn {
            margin-top: 20px;
            padding: 10px 20px;
            font-size: 16px;
            cursor: pointer;
-           background-color: #1a0dab;
-           color: #fff;
-           border: none;
-           border-radius: 5px;
+           margin: 10px;
        }
-       #newQuoteBtn:hover {
-           background-color: #0d0854;
+       @media (max-width: 600px) {
+           body {
+               padding-top: 20px;
+           }
+           h1 {
+               font-size: 24px;
+           }
+           p {
+               font-size: 14px;
+           }
+           #changeColorBtn, #newQuoteBtn {
+               padding: 8px 16px;
+               font-size: 14px;
+           }
        }
 </style>
 </head>
 <body>
-<h1>Dynamic Quote Generator</h1>
-<div id="quote"></div>
-<div id="author"></div>
+<h1>Welcome to My Colorful Static Webpage <i class="fas fa-smile"></i></h1>
+<p>This is a simple static webpage served by a Spring Boot application.</p>
+<div id="quote">Click the button to see a new quote!</div>
+<button id="changeColorBtn">Change Background Color</button>
 <button id="newQuoteBtn">New Quote</button>
 <script>
-       const endpoint = 'https://api.api-ninjas.com/v1/quotes';
-       const quoteDisplay = document.getElementById('quote');
-       const authorDisplay = document.getElementById('author');
-       const newQuoteBtn = document.getElementById('newQuoteBtn');
-       // Function to fetch a random quote from external API
-       function fetchRandomQuote() {
-           fetch(endpoint)
-               .then(response => response.json())
-               .then(data => {
-                   quoteDisplay.textContent = data.content;
-                   authorDisplay.textContent = `— ${data.author}`;
-               })
-               .catch(error => {
-                   console.error('Error fetching quote:', error);
-                   quoteDisplay.textContent = 'Failed to fetch quote. Please try again later.';
-                   authorDisplay.textContent = '';
-               });
-       }
-       // Display initial quote on page load
-       fetchRandomQuote();
-       // Generate a new quote on button click
-       newQuoteBtn.addEventListener('click', fetchRandomQuote);
+       const quotes = [
+           "The only limit to our realization of tomorrow is our doubts of today. - Franklin D. Roosevelt",
+           "Do not wait to strike till the iron is hot; but make it hot by striking. - William Butler Yeats",
+           "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
+           "What you do today can improve all your tomorrows. - Ralph Marston",
+           "The purpose of our lives is to be happy. - Dalai Lama"
+       ];
+       document.getElementById('changeColorBtn').addEventListener('click', function() {
+           document.body.style.backgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+       });
+       document.getElementById('newQuoteBtn').addEventListener('click', function() {
+           const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+           document.getElementById('quote').innerText = randomQuote;
+       });
 </script>
 </body>
 </html>
