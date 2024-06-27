@@ -2,69 +2,67 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Colorful Static Webpage</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+<title>Dynamic Quote Generator</title>
 <style>
        body {
-           background-color: #f0f8ff;
+           font-family: Arial, sans-serif;
            text-align: center;
            padding-top: 50px;
-           font-family: 'Roboto', sans-serif;
        }
        h1 {
-           color: #ff6347;
-           animation: bounce 2s infinite;
+           color: #1a0dab;
        }
-       p {
-           color: #4682b4;
+       #quote {
+           font-size: 24px;
+           margin-top: 20px;
        }
-       @keyframes bounce {
-           0%, 20%, 50%, 80%, 100% {
-               transform: translateY(0);
-           }
-           40% {
-               transform: translateY(-30px);
-           }
-           60% {
-               transform: translateY(-15px);
-           }
+       #author {
+           margin-top: 10px;
+           font-style: italic;
        }
-       #changeColorBtn {
+       #newQuoteBtn {
            margin-top: 20px;
            padding: 10px 20px;
            font-size: 16px;
            cursor: pointer;
+           background-color: #1a0dab;
+           color: #fff;
+           border: none;
+           border-radius: 5px;
        }
-       @media (max-width: 600px) {
-           body {
-               padding-top: 20px;
-           }
-           h1 {
-               font-size: 24px;
-           }
-           p {
-               font-size: 14px;
-           }
-           #changeColorBtn {
-               padding: 8px 16px;
-               font-size: 14px;
-           }
+       #newQuoteBtn:hover {
+           background-color: #0d0854;
        }
 </style>
 </head>
 <body>
-<h1>Welcome to My Colorful Static Webpage <i class="fas fa-smile"></i></h1>
-<p>This is a simple static webpage served by a Spring Boot application.</p>
-<button id="changeColorBtn">Change Background Color</button>
-<br/><br/>
-<img src="https://azurecomcdn.azureedge.net/cvt-0dd8a6b3ef3f6f11bc8c29a3cd85df5c6b2257c548c5c854c1fa44c1e43a512d/images/page/services/devops/overview/hero.svg" alt="Azure DevOps Image" width="400">
-<br/><br/>
-<img src="https://azurecomcdn.azureedge.net/cvt-0dd8a6b3ef3f6f11bc8c29a3cd85df5c6b2257c548c5c854c1fa44c1e43a512d/images/page/services/azure-migration-center/pic.png" alt="Azure Image" width="400">
+<h1>Dynamic Quote Generator</h1>
+<div id="quote"></div>
+<div id="author"></div>
+<button id="newQuoteBtn">New Quote</button>
 <script>
-       document.getElementById('changeColorBtn').addEventListener('click', function() {
-           document.body.style.backgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16);
-       });
+       const endpoint = 'https://api.quotable.io/random';
+       const quoteDisplay = document.getElementById('quote');
+       const authorDisplay = document.getElementById('author');
+       const newQuoteBtn = document.getElementById('newQuoteBtn');
+       // Function to fetch a random quote from external API
+       function fetchRandomQuote() {
+           fetch(endpoint)
+               .then(response => response.json())
+               .then(data => {
+                   quoteDisplay.textContent = data.content;
+                   authorDisplay.textContent = `— ${data.author}`;
+               })
+               .catch(error => {
+                   console.error('Error fetching quote:', error);
+                   quoteDisplay.textContent = 'Failed to fetch quote. Please try again later.';
+                   authorDisplay.textContent = '';
+               });
+       }
+       // Display initial quote on page load
+       fetchRandomQuote();
+       // Generate a new quote on button click
+       newQuoteBtn.addEventListener('click', fetchRandomQuote);
 </script>
 </body>
 </html>
