@@ -3,23 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <title>Colorful Static Webpage</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 <style>
        body {
            background-color: #f0f8ff;
            text-align: center;
            padding-top: 50px;
-           font-family: Arial, sans-serif;
+           font-family: 'Roboto', sans-serif;
        }
        h1 {
            color: #ff6347;
+           animation: bounce 2s infinite;
        }
        p {
            color: #4682b4;
        }
+       @keyframes bounce {
+           0%, 20%, 50%, 80%, 100% {
+               transform: translateY(0);
+           }
+           40% {
+               transform: translateY(-30px);
+           }
+           60% {
+               transform: translateY(-15px);
+           }
+       }
+       #changeColorBtn {
+           margin-top: 20px;
+           padding: 10px 20px;
+           font-size: 16px;
+           cursor: pointer;
+       }
+       @media (max-width: 600px) {
+           body {
+               padding-top: 20px;
+           }
+           h1 {
+               font-size: 24px;
+           }
+           p {
+               font-size: 14px;
+           }
+           #changeColorBtn {
+               padding: 8px 16px;
+               font-size: 14px;
+           }
+       }
 </style>
 </head>
 <body>
-<h1>Welcome to My Colorful Static Webpage</h1>
+<h1>Welcome to My Colorful Static Webpage <i class="fas fa-smile"></i></h1>
 <p>This is a simple static webpage served by a Spring Boot application.</p>
+<button id="changeColorBtn">Change Background Color</button>
+<script>
+       document.getElementById('changeColorBtn').addEventListener('click', function() {
+           document.body.style.backgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+       });
+</script>
 </body>
 </html>
