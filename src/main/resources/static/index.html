@@ -37,15 +37,23 @@
        }
        #quote {
            font-size: 20px;
-           color: #2d1b56;
+           color: #fff;
            margin: 20px 0;
        }
-       #newQuoteBtn, #toggleThemeBtn {
+       #newQuoteBtn {
            margin-top: 20px;
            padding: 10px 20px;
            font-size: 16px;
            cursor: pointer;
-           margin: 10px;
+           background-color: #ff6347;
+           color: #fff;
+           border: none;
+           border-radius: 5px;
+           transition: background-color 0.3s, color 0.3s;
+       }
+       #newQuoteBtn:hover {
+           background-color: #fff;
+           color: #ff6347;
        }
        @keyframes bounce {
            0%, 20%, 50%, 80%, 100% {
@@ -68,7 +76,7 @@
            p {
                font-size: 14px;
            }
-           #newQuoteBtn, #toggleThemeBtn {
+           #newQuoteBtn {
                padding: 8px 16px;
                font-size: 14px;
            }
@@ -82,7 +90,6 @@
 <p>This is a simple static webpage served by a Spring Boot application.</p>
 <div id="quote">Click the button to see a new quote!</div>
 <button id="newQuoteBtn">New Quote</button>
-<button id="toggleThemeBtn">Toggle Light/Dark Theme</button>
 </div>
 <script>
        const quotes = [
@@ -95,16 +102,6 @@
        document.getElementById('newQuoteBtn').addEventListener('click', function() {
            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
            document.getElementById('quote').innerText = randomQuote;
-       });
-       document.getElementById('toggleThemeBtn').addEventListener('click', function() {
-           const currentBgColor = getComputedStyle(document.body).backgroundColor;
-           if (currentBgColor === 'rgb(43, 46, 74)') {
-               document.body.style.backgroundColor = '#f0f8ff';
-               document.body.style.color = '#000';
-           } else {
-               document.body.style.backgroundColor = '#2b2e4a';
-               document.body.style.color = '#fff';
-           }
        });
        particlesJS("particles-js", {
            "particles": {
