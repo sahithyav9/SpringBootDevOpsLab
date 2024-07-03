@@ -35,6 +35,11 @@
        p {
            color: #4682b4;
        }
+       #environment-message {
+           font-size: 20px;
+           color: #fff;
+           margin: 20px 0;
+       }
        #quote {
            font-size: 20px;
            color: #fff;
@@ -88,6 +93,7 @@
 <div class="content">
 <h1>Welcome to My Colorful Static Webpage <i class="fas fa-smile"></i></h1>
 <p>This is a simple static webpage served by a Spring Boot application.</p>
+<div id="environment-message">You are accessing <span th:text="${environment}">Dev</span> environment</div>
 <div id="quote">Click the button to see a new quote!</div>
 <button id="newQuoteBtn">New Quote</button>
 </div>
@@ -209,9 +215,17 @@
                    "remove": {
                        "particles_nb": 2
                    }
-               }
+               },
+               "retina_detect": true
            },
-           "retina_detect": true
+           "config_demo": {
+               "hide_card": false,
+               "background_color": "#b61924",
+               "background_image": "",
+               "background_position": "50% 50%",
+               "background_repeat": "no-repeat",
+               "background_size": "cover"
+           }
        });
 </script>
 </body>
