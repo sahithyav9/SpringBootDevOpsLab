@@ -4,7 +4,9 @@ Commands:
 ******* Docker commands******
 
 ./mvnw clean package
+
 docker build -t <image-name>:V1
+
 docker run -d -p 8080:8080 -e ENVIRONMENT=QA image-name:V1
 
 The environment is passed as a variable in the deployment YAML file for kubernetes.
