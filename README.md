@@ -5,7 +5,7 @@ The feature branch consists of an extra functionality where the same app code ca
 
 ./mvnw clean package
 
-docker build -t <image-name>:V1
+docker build -t image-name:V1
 
 docker run -d -p 8080:8080 -e ENVIRONMENT=QA image-name:V1
 
