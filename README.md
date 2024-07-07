@@ -1,4 +1,11 @@
-To build the application use the command 
+Prerequisites for Deployment:
+
+Java Development Kit (JDK) 17
+
+Docker
+
+
+To build the application use the commands:
 
 ./mvnw clean package
 
