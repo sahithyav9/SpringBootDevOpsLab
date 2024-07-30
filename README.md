@@ -9,7 +9,7 @@ To build the application use the commands:
 
 ./mvnw clean package
 
-docker build -t image-name:V1
+docker build -t image-name:V1 .
 
 docker run -d -p 8080:8080  image-name:V1
 
